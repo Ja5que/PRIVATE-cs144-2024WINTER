@@ -11,6 +11,10 @@ bool Writer::is_closed() const
 
 void Writer::push( string data )
 {
+  if(closed_){
+    return;
+  }
+
   auto len = min(data.size(), available_capacity());
   size_ += len;
   write_count_ += len;
@@ -44,26 +48,19 @@ bool Reader::is_finished() const
 
 uint64_t Reader::bytes_popped() const
 {
-  // Your code here.
   return {read_count_};
 }
 
 string_view Reader::peek() const
 {
-  // bool flag = skip_ < buffer_.front().size();
-  // if(flag){
-  //   return {buffer_.front().substr(skip_,skip_+1)};
-  // }else{
-  // }
-  // Your code here.
   return {buffer_.front().substr(skip_,skip_+1)};
 }
 
 void Reader::pop( uint64_t len )
 {
   while(len){
-    if(len +skip_ >= buffer_.front().size()){
-      len -= buffer_.front().size();
+    if(len >= buffer_.front().size() - skip_){
+      len -= buffer_.front().size() - skip_;
       size_ -= buffer_.front().size();
       read_count_ += buffer_.front().size() - skip_;
       skip_ = 0;
