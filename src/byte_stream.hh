@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <string_view>
+#include <deque>
 
 class Reader;
 class Writer;
@@ -13,11 +14,14 @@ public:
   explicit ByteStream( uint64_t capacity );
 
   // Helper functions (provided) to access the ByteStream's Reader and Writer interfaces
+  // check there are no member variables in the Reader and Writer classes
+  // get access to the Reader and Writer instance
   Reader& reader();
   const Reader& reader() const;
   Writer& writer();
   const Writer& writer() const;
 
+  //state functions
   void set_error() { error_ = true; };       // Signal that the stream suffered an error.
   bool has_error() const { return error_; }; // Has the stream had an error?
 
@@ -25,6 +29,13 @@ protected:
   // Please add any additional state to the ByteStream here, and not to the Writer and Reader interfaces.
   uint64_t capacity_;
   bool error_ {};
+  // string buffer and used size
+  std::deque<std::string> buffer_ {};
+  uint64_t size_ {0};  
+  uint64_t skip_ {0};
+  uint64_t closed_ {0};
+  uint64_t read_count_ {0};
+  uint64_t write_count_ {0};
 };
 
 class Writer : public ByteStream
