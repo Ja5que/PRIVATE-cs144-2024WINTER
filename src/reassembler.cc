@@ -4,6 +4,7 @@ using namespace std;
 
 void Reassembler::insert( uint64_t first_index, string data, bool is_last_substring )
 {
+  // attempt to write some ACM code
   // Your code here.
   (void)first_index;
   (void)data;
