@@ -6,21 +6,17 @@ ByteStream::ByteStream( uint64_t capacity ) : capacity_( capacity ) {}
 
 bool Writer::is_closed() const
 {
-  return {closed_ == true};
+  return closed_ == true;
 }
 
 void Writer::push( string data )
 {
-  if(closed_){
-    return;
-  }
-  if(data =="") return;
+  if(closed_) return; // dunno whether it is necessary
   auto len = min(data.size(), available_capacity());
-  if(len == 0) return;
+  if(len == 0) return; //data is empty string or no space left 
   size_ += len;
   write_count_ += len;
   buffer_.push_back(data.substr(0, len));
-  // (void)data;
   return;
 }
 
@@ -37,13 +33,11 @@ uint64_t Writer::available_capacity() const
 
 uint64_t Writer::bytes_pushed() const
 {
-  // Your code here.
   return {write_count_};
 }
 
 bool Reader::is_finished() const
 {
-  // Your code here.
   return {closed_ == 1 && size_ == 0};
 }
 
@@ -56,19 +50,17 @@ string_view Reader::peek() const
 {
   string_view fuckview = buffer_.front();
   fuckview.remove_prefix(skip_);
-  //  if (buffer_.front().size()==0 || buffer_.front().size() == skip_ ) {
-  //     std::cout<<"fuck";
-  //   }
   return fuckview;
 }
 
 void Reader::pop( uint64_t len )
 {
   while(len){
-    if(len >= buffer_.front().size() - skip_){
-      len -= buffer_.front().size() - skip_;
+    const uint64_t frontleftsize = buffer_.front().size() - skip_;
+    if(len >= frontleftsize){
+      len -=  frontleftsize;
+      read_count_ +=  frontleftsize;
       size_ -= buffer_.front().size();
-      read_count_ += buffer_.front().size() - skip_;
       skip_ = 0;
       buffer_.pop_front();
     } else {
@@ -82,6 +74,5 @@ void Reader::pop( uint64_t len )
 
 uint64_t Reader::bytes_buffered() const
 {
-  // Your code here.
-  return {size_ - skip_};
+  return size_ - skip_;
 }
