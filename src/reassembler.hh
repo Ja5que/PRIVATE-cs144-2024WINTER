@@ -1,7 +1,9 @@
 #pragma once
 
 #include "byte_stream.hh"
-
+#include <unordered_map>
+#include <set>
+struct seg;
 class Reassembler
 {
 public:
@@ -42,4 +44,19 @@ public:
 
 private:
   ByteStream output_; // the Reassembler writes to this ByteStream
+  std::unordered_map<uint64_t,std::string> stringpool;
+  std::set<seg> segs;
+  uint64_t start_{0};
+  uint64_t capacity_{0}; // trace bytestream capacity
+  uint64_t last_index{-1};
+  uint64_t pool_seq_id{-1};
+  uint64_t storage_count{0};
+};
+
+struct seg{
+  uint64_t l,r,id;
+  seg(uint64_t _l, uint64_t _r, uint64_t _id): l(_l), r(_r), id(_id) {}
+  bool operator < (const seg &rhs) const{
+    return l < rhs.l;
+  }
 };
