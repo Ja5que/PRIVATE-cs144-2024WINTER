@@ -4,6 +4,11 @@ using namespace std;
 
 ByteStream::ByteStream( uint64_t capacity ) : capacity_( capacity ) {}
 
+uint64_t ByteStream::getmaxcapacity()
+{
+  return capacity_;
+}
+
 bool Writer::is_closed() const
 {
   return closed_ == true;
@@ -11,7 +16,7 @@ bool Writer::is_closed() const
 
 void Writer::push( string data )
 {
-  if(closed_) return; // dunno whether it is necessary
+  // if(closed_) return; // dunno whether it is necessary
   auto len = min(data.size(), available_capacity());
   if(len == 0) return; //data is empty string or no space left 
   size_ += len;

@@ -44,13 +44,17 @@ public:
 
 private:
   ByteStream output_; // the Reassembler writes to this ByteStream
-  std::unordered_map<uint64_t,std::string> stringpool;
-  std::set<seg> segs;
+  std::unordered_map<uint64_t,std::string> stringpool{};
+  std::set<seg> segs{};
   uint64_t start_{0};
   uint64_t capacity_{0}; // trace bytestream capacity
-  uint64_t last_index{-1};
-  uint64_t pool_seq_id{-1};
+  uint64_t last_index{0};
+  uint64_t pool_seq_id{0};
   uint64_t storage_count{0};
+  uint64_t skip_{0};
+  bool seen_end{false};
+  // bool is_null{true};
+  void attempt_write();
 };
 
 struct seg{
