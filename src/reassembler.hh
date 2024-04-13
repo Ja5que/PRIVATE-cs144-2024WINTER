@@ -42,6 +42,15 @@ public:
   // Access output stream writer, but const-only (can't write from outside)
   const Writer& writer() const { return output_.writer(); }
 
+  // Access starting index
+  uint64_t getstart() const { return start_; }
+
+  // Access closing status
+  bool getclosed() const { return is_closed; }
+
+  // set error state
+  void set_error() { output_.set_error(); }
+
 private:
   ByteStream output_; // the Reassembler writes to this ByteStream
   std::unordered_map<uint64_t,std::string> stringpool{};
@@ -53,6 +62,7 @@ private:
   uint64_t storage_count{0};
   uint64_t skip_{0};
   bool seen_end{false};
+  bool is_closed{false};
   void attempt_write();
 };
 

@@ -35,6 +35,7 @@ void Reassembler::attempt_write()
   }
   if(seen_end && start_ >= last_index){
     output_.writer().close();
+    is_closed = true;
   }
   return;
 }

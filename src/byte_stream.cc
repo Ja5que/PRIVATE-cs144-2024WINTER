@@ -4,7 +4,7 @@ using namespace std;
 
 ByteStream::ByteStream( uint64_t capacity ) : capacity_( capacity ) {}
 
-uint64_t ByteStream::getmaxcapacity()
+uint64_t ByteStream::getmaxcapacity() const
 {
   return capacity_;
 }
