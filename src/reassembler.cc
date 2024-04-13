@@ -12,9 +12,11 @@ void Reassembler::attempt_write()
   uint64_t available_capacity = capacity_;
   while(available_capacity != 0 && !segs.empty()){
     if(segs.begin()->l != start_) break;
+    
     std::string& nowstring = stringpool[segs.begin()->id];
     auto nowstringlength = nowstring.size();
     auto nowstringlengthleft = nowstringlength - skip_;
+    
     if(available_capacity >= nowstringlengthleft){
       output_.writer().push(nowstring.substr(skip_));
       stringpool.erase(segs.begin()->id);
@@ -31,7 +33,6 @@ void Reassembler::attempt_write()
       available_capacity = 0;
     }
   }
-  //if(seen_end && (start_ > last_index || (start_ == last_index && start_ == 0))){
   if(seen_end && start_ >= last_index){
     output_.writer().close();
   }

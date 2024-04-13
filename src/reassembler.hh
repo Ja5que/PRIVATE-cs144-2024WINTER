@@ -53,7 +53,6 @@ private:
   uint64_t storage_count{0};
   uint64_t skip_{0};
   bool seen_end{false};
-  // bool is_null{true};
   void attempt_write();
 };
 
