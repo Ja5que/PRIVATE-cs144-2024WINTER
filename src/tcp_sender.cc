@@ -17,7 +17,15 @@ uint64_t TCPSender::consecutive_retransmissions() const
 
 void TCPSender::push( const TransmitFunction& transmit )
 {
+  
+  if(last_window_size_ == 0) {
+    //send a single byte
+    //save the single byte in retransmission buffer
+    return;
+  }
   // Your code here.
+  // send a segment with the maximum size create from the reader
+  // save the segment in retransmission
   (void)transmit;
 }
 

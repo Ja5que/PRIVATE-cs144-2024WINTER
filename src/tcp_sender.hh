@@ -48,4 +48,5 @@ private:
   ByteStream input_;
   Wrap32 isn_;
   uint64_t initial_RTO_ms_;
+  uint64_t last_window_size_ {1};
 };
