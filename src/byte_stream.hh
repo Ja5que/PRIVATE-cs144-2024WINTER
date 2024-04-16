@@ -36,6 +36,7 @@ protected:
   uint64_t closed_ {0};
   uint64_t read_count_ {0};
   uint64_t write_count_ {0};
+  std::string somekindofeof_ {"a"};
 };
 
 class Writer : public ByteStream

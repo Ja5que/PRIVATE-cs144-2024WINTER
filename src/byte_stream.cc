@@ -53,6 +53,11 @@ uint64_t Reader::bytes_popped() const
 
 string_view Reader::peek() const
 {
+  if(buffer_.empty()) {
+    string_view fuckview = somekindofeof_;
+    fuckview.remove_prefix(1);
+    return fuckview;
+  }
   string_view fuckview = buffer_.front();
   fuckview.remove_prefix(skip_);
   return fuckview;
