@@ -1,6 +1,8 @@
 #pragma once
 
 #include <queue>
+#include <map>
+#include <set>
 
 #include "address.hh"
 #include "ethernet_frame.hh"
@@ -81,4 +83,21 @@ private:
 
   // Datagrams that have been received
   std::queue<InternetDatagram> datagrams_received_ {};
+
+  // Mapping from IP address to Ethernet address
+  std::map<uint32_t, EthernetAddress> arp_table_ {};
+
+
+  // Datagrams needed to be sent after ARP resolution
+  // std::queue<std::pair<InternetDatagram, Address>> datagrams_to_send_ {};
+  std::multimap<uint32_t, std::pair<InternetDatagram, Address>> datagrams_to_send_ {};
+
+  // arp_table ttl
+  std::queue<std::pair<uint32_t,uint64_t>> arp_table_ttl_{};
+
+  //ARP request flight pool & ttl
+  std::map<uint32_t,uint64_t> arp_request_pool_ {};
+
+  // Last time the tick function was called
+  uint64_t last_tick_ = 0;
 };
