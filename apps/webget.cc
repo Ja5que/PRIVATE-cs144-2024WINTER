@@ -1,4 +1,5 @@
 #include "socket.hh"
+#include "tcp minnow socket.hh"
 
 #include <cstdlib>
 #include <iostream>
@@ -9,7 +10,7 @@ using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  TCPSocket cursocket; 
+  CS144TCPSocket cursocket; 
   cursocket.connect(Address(host, "http"));
   // socket bind address
   cursocket.write("GET " + path + " HTTP/1.1\r\n");
