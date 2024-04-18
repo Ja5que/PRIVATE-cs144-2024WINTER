@@ -47,9 +47,9 @@ void NetworkInterface::send_datagram( const InternetDatagram& dgram, const Addre
       frame.header.src = ethernet_address_;
       frame.header.type = EthernetHeader::TYPE_ARP;
       frame.payload = serializer.output();
-      transmit(frame);
       arp_request_pool_[next_hop_ip_address]=last_tick_;
       datagrams_to_send_.insert({next_hop_ip_address,{dgram,next_hop}});
+      transmit(frame);
     }
   }else{
     EthernetFrame frame;

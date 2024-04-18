@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <optional>
+#include <map>
 
 #include "exception.hh"
 #include "network_interface.hh"
@@ -35,4 +36,7 @@ public:
 private:
   // The router's collection of network interfaces
   std::vector<std::shared_ptr<NetworkInterface>> _interfaces {};
+
+  // route map
+  std::multimap<size_t, std::tuple<uint32_t, uint8_t, std::optional<Address> > > _routes_map {};
 };
